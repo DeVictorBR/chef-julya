@@ -1,3 +1,5 @@
+"use client"
+
 type BurgerButtonProps = {
   open: boolean;
   onToggle: () => void;
