@@ -6,7 +6,7 @@ import Hat from "@/public/assets/chef-hat.png";
 
 export function Footer() {
     return (
-        <footer className="bg-brand-pink/20 border-t border-brand-pink-soft pt-12 pb-6">
+        <footer id="contact" className="bg-brand-pink/20 border-t border-brand-pink-soft pt-12 pb-6">
             <div className="container mx-auto px-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-10 text-center md:text-left">
                     

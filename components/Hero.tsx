@@ -5,7 +5,7 @@ import HeroImage from "@/public/assets/cake.png"
 
 export function Hero() {
     return (
-        <section id="home" className="min-h-screen w-full flex items-center justify-center bg-brand-pink/10 pt-5 px-6">
+        <section id="home" className="min-h-screen w-full flex items-center justify-center bg-brand-pink/10 px-6">
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-10">
                 
                 <div className="flex-1 flex flex-col items-center md:items-start text-center md:text-left gap-6">
