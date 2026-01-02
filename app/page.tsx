@@ -10,8 +10,7 @@ export default function Home() {
     <>
       <Navbar />
 
-      <main className="pt-20">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <main className="px-4 pt-10">
           <Hero />
 
           <div className="container">
@@ -20,7 +19,6 @@ export default function Home() {
             <SectionDivider />
             <Gallery />
           </div>
-        </div>
       </main>
 
       <Footer />
