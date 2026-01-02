@@ -18,6 +18,7 @@ export default function Home() {
             <About />
             <SectionDivider />
             <Gallery />
+            <SectionDivider />
           </div>
       </main>
 
