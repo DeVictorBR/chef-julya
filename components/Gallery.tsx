@@ -21,7 +21,7 @@ const products: Product[] = [
         id: 1,
         title: "Bolo de laranja",
         description: "Feito com carinho",
-        image: "/assets/bolo1.avif"
+        image: "../public/assets/bolo1.avif"
     },
     {
         id: 2,
@@ -58,7 +58,7 @@ export function Gallery() {
                             imageSrc={product.image}
                             className="h-full border border-pink-100"
                             >
-                                <button className="mt-auto bg-brand-pink-strong text-white py-2 rounded-lg font-bold hover:brightness-110 transition-all">Saber mais</button>
+                                <button className="mt-auto bg-brand-pink-strong text-white py-2 rounded-lg font-bold hover:brightness-110 transition-all cursor-pointer">Saber mais</button>
                             </Card>
                         </SwiperSlide>
                     ))}

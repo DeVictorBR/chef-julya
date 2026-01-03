@@ -21,7 +21,7 @@ export function Hero() {
                         carinho, dedicação e os melhores ingredientes.
                     </p>
 
-                    <button className="bg-brand-pink-strong text-white px-10 py-3 rounded-full font-bold shadow-lg hover:brightness-110 transition-all active:scale-95 w-fit">
+                    <button className="bg-brand-pink-strong text-white px-10 py-3 rounded-full font-bold shadow-lg hover:brightness-110 transition-all active:scale-95 w-fit cursor-pointer">
                         Encomendar Agora
                     </button>
                 </div>
