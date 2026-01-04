@@ -1,8 +1,8 @@
-import { Navbar } from "@/src/components/layout/Navbar";
+import { Navbar } from "@/src/components/modules/marketing/Navbar";
 import { Hero } from "@/src/components/modules/marketing/Hero";
 import { About } from "@/src/components/modules/marketing/About";
 import { Gallery } from "@/src/components/modules/marketing/Gallery";
-import { Footer } from "@/src/components/modules/marketing/Footer";
+import { Footer } from "@/src/components/ui/Footer";
 import { SectionDivider } from "@/src/components/ui/SectionDivider";
 
 export default function Home() {

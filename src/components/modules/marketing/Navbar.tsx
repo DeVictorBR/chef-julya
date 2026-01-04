@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import Hat  from "@/public/assets/chef-hat.png"
-import { BurgerButton } from "../ui/BurguerButton";
+import { BurgerButton } from "../../ui/BurguerButton";
 
 export function Navbar() {
     const [open, setOpen] = useState(false);
