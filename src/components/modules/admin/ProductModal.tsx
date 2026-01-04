@@ -43,6 +43,12 @@ export function ProductModal({ isOpen, onClose, onSuccess }: ProductModalProps) 
         }
     };
 
+    const handleClose = () => {
+        reset();
+        setPreview(null);
+        onClose();
+    }
+
     const onSubmit = async (data: ProductFormData) => {
         try {
             setLoading(true);
@@ -67,7 +73,7 @@ export function ProductModal({ isOpen, onClose, onSuccess }: ProductModalProps) 
     return (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-6">
             <div className="bg-white w-full max-w-2xl rounded-[2rem] shadow-2xl overflow-hidden relative border border-pink-50">
-                <button onClick={onClose} type="button" className="absolute right-6 top-6 text-gray-400 hover:text-pink-500 transition-colors cursor-pointer z-10">
+                <button onClick={handleClose} type="button" className="absolute right-6 top-6 text-gray-400 hover:text-pink-500 transition-colors cursor-pointer z-10">
                     <X size={24} />
                 </button>
 
