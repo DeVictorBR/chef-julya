@@ -1,0 +1,70 @@
+@import "tailwindcss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  --background: #f2f4f7;
+  --foreground: #1a1a1a;
+  --brand-pink: #ffcbdb;
+  --brand-pink-soft: #fcb7d4;
+  --brand-pink-strong: #fa628a;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-pink-soft: var(--brand-pink-soft);
+  --color-brand-pink-strong: var(--brand-pink-strong);
+
+  --breakpoint-xs: 375px;   
+  --breakpoint-sm: 640px;   
+  --breakpoint-md: 768px;   
+  --breakpoint-lg: 1024px;  
+  --breakpoint-xl: 1024px;  
+  --breakpoint-2xl: 1024px;
+}
+
+.container {
+  margin-inline: auto;
+  padding-inline: 1rem;
+  width: 100%;
+  max-width: 1024px;
+}
+
+.dancing {
+  font-family: var(--font-dancing);
+}
+
+:root {
+  --swiper-navigation-color: #fa628a; 
+  --swiper-pagination-color: #fa628a;
+}
+
+.swiper-pagination {
+    bottom: 0px !important;
+}
+
+.swiper {
+    padding-bottom: 35px !important; 
+}
+
+.swiper-pagination-bullet-active {
+    background: #E84C88 !important; 
+}
+
+.swiper-slide {
+  height: auto !important;
+  display: flex;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+}
