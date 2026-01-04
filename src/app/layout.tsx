@@ -2,6 +2,9 @@ import type { Metadata } from "next";
 import { Poppins, Dancing_Script, Raleway } from "next/font/google";
 import "@/src/globals.css"
 
+import { ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css"
+
 const poppins = Poppins({
   subsets: ["latin"],
   weight: ["100","200","300","400","500","600","700","800","900"],
@@ -40,6 +43,18 @@ export default function RootLayout({
         `}
       >
         {children}
+        <ToastContainer 
+          position="top-right"
+          autoClose={3000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme="colored"
+        />
       </body>
     </html>
   );

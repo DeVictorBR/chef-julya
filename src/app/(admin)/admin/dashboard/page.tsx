@@ -17,9 +17,9 @@ export default function AdminDashboard() {
       </div>
 
       <div className="bg-white p-6 rounded-3xl shadow-sm border border-pink-100">
-        <h3 className="text-lg font-bold text-gray-800 mb-4">Últimos Produtos Cadastrados</h3>
+        <h3 className="text-lg font-bold text-gray-800 mb-4">Últimos Pedidos Concluídos</h3>
         <div className="text-center py-10 text-gray-400 border-2 border-dashed border-gray-100 rounded-2xl">
-          Aqui você poderá listar os itens retornados pelo seu GET paginado.
+          ...
         </div>
       </div>
     </div>
