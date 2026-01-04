@@ -4,13 +4,19 @@ import { Plus, Search, Edit, Trash2, Loader2, PackageOpen } from "lucide-react";
 import { useEffect, useState } from "react";
 import { productService } from "@/src/services/productService";
 import { ProductModal } from "@/src/components/modules/admin/ProductModal";
+import { DeleteModal } from "@/src/components/modules/admin/DeleteModal";
 import { ProductResponseDTO } from "@/src/types/product";
+import { toast } from "react-toastify";
 
 export default function Products() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [products,setProducts] = useState<ProductResponseDTO[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const [page, setPage] = useState(0);
+    const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+    const [productToDelete, setProductToDelete] = useState<{id: string, name: string} | null>(null);
+    const [isDeleting, setIsDeleting] = useState(false);
+
 
     useEffect(() => {
         loadProducts();
@@ -28,21 +34,27 @@ export default function Products() {
         }
     };
 
-    const handleDelete = async (id: string, productName: string) => {
-      const confirmed = confirm(`Deseja realmente excluir ${productName} do cardápio?`);
-      
-      if(!confirmed) return;
-
-      try {
-        await productService.delete(id);
-        loadProducts();
-      } catch (error) {
-        console.error("Erro ao deletar produto: ", error);
-        alert("Ops! Ocorreu um erro ao tentar excluir o produto")
-      }
+    const handleOpenDeleteModal = (id: string, name: string) => {
+      setProductToDelete({ id, name });
+      setIsDeleteModalOpen(true);
     }
 
+    const handleConfirmDelete = async () => {
+      if(!productToDelete) return;
 
+      try {
+        setIsDeleting(true);
+        await productService.delete(productToDelete.id);
+        toast.success("Doce removido com sucesso!");
+        loadProducts();
+      } catch (error) {
+        toast.error("Erro ao excluir produto")
+      } finally {
+        setIsDeleting(false);
+        setIsDeleteModalOpen(false);
+        setProductToDelete(null);
+      }
+    }
 
     return (
         <div className="space-y-6">
@@ -118,7 +130,7 @@ export default function Products() {
                                   <Edit size={18}/>
                                 </button>
                                 <button 
-                                  onClick={() => handleDelete(product.id, product.name)}
+                                  onClick={() => handleOpenDeleteModal(product.id, product.name)}
                                   className="p-2 text-red-500 hover:bg-red-50 rounded-xl transition-colors cursor-pointer"
                                   title="Excluir produto"
                                 >
@@ -140,6 +152,13 @@ export default function Products() {
                 isOpen={isModalOpen} 
                 onClose={() => setIsModalOpen(false)} 
                 onSuccess={loadProducts}
+            />
+            <DeleteModal 
+              isOpen={isDeleteModalOpen}
+              onClose={() => setIsDeleteModalOpen(false)}
+              onConfirm={handleConfirmDelete}
+              itemName={productToDelete?.name || ""}
+              loading={isDeleting}
             />
         </div>
     )
