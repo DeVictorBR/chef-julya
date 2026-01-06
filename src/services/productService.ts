@@ -27,5 +27,18 @@ export const productService = {
     },
     async delete(id: string): Promise<void> {
         await api.delete(`/products/${id}`);
+    },
+    async update(id: string, data: ProductRequestDTO, file?: File): Promise<ProductResponseDTO> {
+        const formData = new FormData();
+        const jsonBlob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+        formData.append("data", jsonBlob);
+
+        if(file) {
+            formData.append("file", file);
+        }
+        const response = await api.put<ProductResponseDTO>(`products/${id}`, formData, {
+            headers: { "Content-Type": "multipart/form-data" }
+        });
+        return response.data;
     }
 }
