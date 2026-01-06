@@ -15,6 +15,7 @@ export default function Products() {
     const [page, setPage] = useState(0);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [productToDelete, setProductToDelete] = useState<{id: string, name: string} | null>(null);
+    const [productToEdit, setProductToEdit] = useState<ProductResponseDTO | null>(null);
     const [isDeleting, setIsDeleting] = useState(false);
 
 
@@ -32,6 +33,16 @@ export default function Products() {
         } finally {
             setIsLoading(false);
         }
+    };
+
+    const handleEditClick = (product: ProductResponseDTO) => {
+        setProductToEdit(product);
+        setIsModalOpen(true);
+    };
+
+    const handleCloseModal = () => {
+        setIsModalOpen(false);
+        setProductToEdit(null);
     };
 
     const handleOpenDeleteModal = (id: string, name: string) => {
@@ -126,7 +137,10 @@ export default function Products() {
                               </td>
 
                               <td className="px-6 py-4 text-right space-x-2">
-                                <button className="p-2 text-blue-500 hover:bg-blue-50 rounded-xl transition-colors cursor-pointer">
+                                <button 
+                                className="p-2 text-blue-500 hover:bg-blue-50 rounded-xl transition-colors cursor-pointer"
+                                onClick={() => handleEditClick(product)}
+                                >
                                   <Edit size={18}/>
                                 </button>
                                 <button 
@@ -150,7 +164,7 @@ export default function Products() {
             </div>
             <ProductModal 
                 isOpen={isModalOpen} 
-                onClose={() => setIsModalOpen(false)} 
+                onClose={handleCloseModal} 
                 onSuccess={loadProducts}
             />
             <DeleteModal 
@@ -159,6 +173,13 @@ export default function Products() {
               onConfirm={handleConfirmDelete}
               itemName={productToDelete?.name || ""}
               loading={isDeleting}
+            />
+
+            <ProductModal 
+              isOpen={isModalOpen} 
+              onClose={handleCloseModal} 
+              onSuccess={loadProducts}
+              product={productToEdit} 
             />
         </div>
     )

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { ProductFormData, productSchema } from "@/src/schemas/product";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -8,14 +8,16 @@ import { X, Upload, Loader2, AlertCircle } from "lucide-react";
 import { productService } from "@/src/services/productService";
 import { NumericFormat } from "react-number-format";
 import { toast } from "react-toastify";
+import { ProductResponseDTO } from "@/src/types/product";
 
 interface ProductModalProps {
     isOpen: boolean;
     onClose: () => void;
     onSuccess: () => void;
+    product?: ProductResponseDTO | null;
 }
 
-export function ProductModal({ isOpen, onClose, onSuccess }: ProductModalProps) {
+export function ProductModal({ isOpen, onClose, onSuccess, product }: ProductModalProps) {
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState<string | null>(null);  
 
@@ -36,6 +38,21 @@ export function ProductModal({ isOpen, onClose, onSuccess }: ProductModalProps) 
         }
     });
 
+    useEffect(() => {
+        if(product && isOpen) {
+            reset({
+                name: product.name,
+                description: product.description,
+                price: product.price,
+                stock: product.stock
+            });
+            if(product.imageUrl) setPreview(product.imageUrl);
+        } else if(!product && isOpen) {
+            reset({ name: "", description: "", price: 0, stock: 0, file: undefined });
+            setPreview(null);
+        }
+    }, [product, isOpen, reset]);
+
     const handlePreview = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -50,19 +67,28 @@ export function ProductModal({ isOpen, onClose, onSuccess }: ProductModalProps) 
     }
 
     const onSubmit = async (data: ProductFormData) => {
+        const isEditing = !!product?.id;
+        const hasFile = data.file && data.file.length > 0;
+        if(!isEditing && !hasFile) {
+            toast.error("A foto é obrigatória para novos produtos!")
+            return;
+        }
         try {
             setLoading(true);
-            const productFile = data.file[0];
             const { file, ...productData } = data;
-            await productService.create(productData, productFile);
-            reset();
-            setPreview(null);
+            const productFile = hasFile ? file![0] : undefined;
+            if(isEditing) {
+                await productService.update(product.id!, productData, productFile);
+                toast.success("Doce atualizado! ✨");
+            } else {
+                await productService.create(productData, productFile as File);
+                toast.success("Doce cadastrado com sucesso! 🍰");
+            }
+            handleClose();
             onSuccess();
-            onClose();
-            toast.success("Doce cadastrado com sucesso! 🍰");
         } catch (error) {
             console.error(error);
-            toast.error("Erro ao cadastrar produto.");
+            toast.error("Erro ao salvar produto.");
         } finally {
             setLoading(false);
         }
@@ -79,7 +105,9 @@ export function ProductModal({ isOpen, onClose, onSuccess }: ProductModalProps) 
 
                 <form onSubmit={handleSubmit(onSubmit)} className="p-8">
                     <header className="mb-6">
-                        <h2 className="text-2xl font-bold text-gray-800 font-dancing">Novo Doce</h2>
+                        <h2 className="text-2xl font-bold text-gray-800 font-dancing">
+                            {product ? "Editar Doce" : "Novo Doce"}
+                        </h2>
                         <p className="text-gray-500 text-sm">Preencha os dados para atualizar o cardápio.</p>
                     </header>
 
